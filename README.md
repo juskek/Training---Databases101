@@ -19,6 +19,15 @@ It runs a database service on port `5432` which you can connect to with a Postgr
 4. cd to the volume and run `docker compose exec db bash` to start a bash script from inside the database container. 
 5. Run `psql -U <username> -W -d pokemon`
 
+
+## Running SQL scripts
+Create pokemon table: 
+```
+cat ../migrations/202308181628/_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
+
+```
+
+
 ## 🌄 The project
 
 We're going to be building a database for [PokeMMO](https://pokemmo.com/), an MMO version of pokemon where players can meet in-game to trade or battle.
