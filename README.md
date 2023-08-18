@@ -24,7 +24,10 @@ It runs a database service on port `5432` which you can connect to with a Postgr
 Create pokemon table: 
 ```
 cat ../migrations/202308181628/_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-
+```
+Seed pokemon table:
+```
+cat ../seeds/202308181628/_populate_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 ```
 
 
