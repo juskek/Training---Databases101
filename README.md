@@ -38,4 +38,9 @@ cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1
 
 ## 🌄 The project
 
+The postgres data is mirrored in your local `/db-data` directory through a [volume](https://docs.docker.com/storage/volumes/).
+
+Run `docker compose exec db bash` to start a bash script from inside the database container. Then run `psql -U <username> --command "\dt"` to describe all the tables in the database.
+
+
 We're going to be building a database for [PokeMMO](https://pokemmo.com/), an MMO version of pokemon where players can meet in-game to trade or battle.
