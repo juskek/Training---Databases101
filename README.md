@@ -20,21 +20,11 @@ It runs a database service on port `5432` which you can connect to with a Postgr
 5. Run `psql -U <username> -W -d pokemon`
 
 
-## Running SQL scripts
-Create pokemon table: 
-```
-cat ../migrations/202308181628/_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-```
+## Running queries
 
-Seed pokemon table:
-```
-cat ../seeds/202308181628/_populate_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-```
+1. `bash main.sh` from root
+2. Select options
 
-Select all records:
-```
-cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-```
 
 ## 🌄 The project
 
