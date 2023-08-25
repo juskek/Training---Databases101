@@ -1,4 +1,5 @@
+DROP TABLE IF EXISTS pokemon_species;
 CREATE TABLE pokemon_species (
-    id SERIAL,
-    name text
+    id SERIAL PRIMARY KEY,
+    name TEXT UNIQUE
 );
