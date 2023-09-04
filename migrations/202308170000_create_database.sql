@@ -1,0 +1,1 @@
+SELECT 'CREATE DATABASE pokemon' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'pokemon')\gexec
