@@ -5,7 +5,7 @@ source ./menu.sh
 # example usage
 one="Create, seed and view pokemon_species table"
 two="Create, seed and view pokemon table"
-three="Option Three"
+three="WARNING: Delete pokemon database"
 options=("$one" "$two" "$three")
 
 select_option "${options[@]}"
@@ -37,7 +37,9 @@ case $result in
         cat ../queries/get_all_pokemon.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
         ;;
     "$three")
-        echo "Not implemented"
+        cd db-data/
+
+        cat ../queries/drop_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
         ;;
     *)
         print_error "Invalid option: $result"
