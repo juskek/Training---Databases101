@@ -17,10 +17,10 @@ case $result in
     "$one")
         cd db-data/
         # Create table
-        cat ../migrations/202308181628/_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
+        cat ../migrations/202308181628_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
         # Seed table
-        cat ../seeds/202308181628/_populate_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
+        cat ../seeds/202308181628_populate_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
         # Select all records
         cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
@@ -28,10 +28,10 @@ case $result in
     "$two")
         cd db-data/
         # Create table
-        cat ../migrations/202308181628/_create_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
+        cat ../migrations/202308181628_create_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
         # Seed table
-        cat ../seeds/202308181628/_populate_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
+        cat ../seeds/202308181628_populate_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
         # Select all records
         cat ../queries/get_all_pokemon.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
