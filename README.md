@@ -17,7 +17,7 @@ It runs a database service on port `5432` which you can connect to with a Postgr
    - You can add the `-d` flag to run it in the background, but remember to run `docker-compose down` to stop the container when you are finished with it.
    - The postgres data is mirrored in your local `/db-data` directory through a [volume](https://docs.docker.com/storage/volumes/).
 4. cd to the volume and run `docker compose exec db bash` to start a bash script from inside the database container. 
-5. Run `psql -U <username> -W -d pokemon`
+5. Run `psql -U <username> -d pokemon`
 
 
 ## Running queries
