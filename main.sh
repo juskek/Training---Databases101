@@ -17,7 +17,8 @@ while true; do
 
     select_option "${options[@]}"
     result="${options[$?]}"
-
+    
+    echo -e "\n===============OUTPUT===============\n"
     echo "You chose: $result"
 
     case $result in
@@ -83,4 +84,5 @@ while true; do
     esac
 
     cd "$current_dir" || exit 1 # return to previous dir
+    echo -e "\n===============OUTPUT===============\n"
 done
