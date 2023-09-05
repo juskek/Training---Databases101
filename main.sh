@@ -8,6 +8,7 @@ while true; do
     connect="Connect to database with psql"
     schema="Show schema"
     get_pokemon_with_species_name="Get all pokemon with a particular species name"
+    get_species_with_type="Get species of type"
     create="INIT: Create pokemon database"
     init_pokemon_species="INIT: Create, seed and view pokemon_species table"
     init_pokemon_table="INIT: Create, seed and view pokemon table"
@@ -15,7 +16,7 @@ while true; do
     delete_db="WARNING: Delete pokemon database"
     exit="Exit"
 
-    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$create"  "$init_pokemon_species" "$init_pokemon_table" "$init_pokemon_type_table" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$get_species_with_type" "$create"  "$init_pokemon_species" "$init_pokemon_table" "$init_pokemon_type_table" "$delete_db" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -43,7 +44,12 @@ while true; do
             cd db-data/ || exit 1
 
             cat ../queries/get_pokemon_where_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-        
+            ;;
+
+        "$get_species_with_type")
+            cd db-data/ || exit 1
+
+            cat ../queries/get_species_where_type.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
             ;;
 
         "$create")
