@@ -3,6 +3,8 @@
 source ./menu.sh
 
 while true; do
+    current_dir=$(pwd)
+
     connect="Connect to database with psql"
     schema="Show schema"
     init_pokemon_species="Create, seed and view pokemon_species table"
@@ -79,4 +81,6 @@ while true; do
             print_error "Invalid option: $result"
             ;;
     esac
+
+    cd "$current_dir" || exit 1 # return to previous dir
 done
