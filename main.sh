@@ -4,11 +4,11 @@ source ./menu.sh
 
 # example usage
 connect="Connect to database with psql"
-one="Create, seed and view pokemon_species table"
-two="Create, seed and view pokemon table"
+init_pokemon_species="Create, seed and view pokemon_species table"
+init_pokemon_table="Create, seed and view pokemon table"
 create="INIT: Create pokemon database"
-three="WARNING: Delete pokemon database"
-options=("$connect"  "$one" "$two" "$create" "$three")
+delete_db="WARNING: Delete pokemon database"
+options=("$connect"  "$init_pokemon_species" "$init_pokemon_table" "$create" "$delete_db")
 
 select_option "${options[@]}"
 result="${options[$?]}"
@@ -25,7 +25,7 @@ case $result in
         ;;
 
         
-    "$one")
+    "$init_pokemon_species")
         cd db-data/
         # Create table
         cat ../migrations/202308181628_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
@@ -36,7 +36,7 @@ case $result in
         # Select all records
         cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
         ;;
-    "$two")
+    "$init_pokemon_table")
         cd db-data/
         # Create table
         cat ../migrations/202308181628_create_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
@@ -55,7 +55,7 @@ case $result in
         cat ../queries/check_database_exists.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
         ;;
 
-    "$three")
+    "$delete_db")
         cd db-data/
 
         cat ../queries/drop_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
