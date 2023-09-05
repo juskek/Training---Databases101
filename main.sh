@@ -10,13 +10,10 @@ while true; do
     get_pokemon_with_species_name="Get all pokemon with a particular species name"
     get_species_with_type="Get species of type"
     create="INIT: Create pokemon database"
-    init_pokemon_species="INIT: Create, seed and view pokemon_species table"
-    init_pokemon_table="INIT: Create, seed and view pokemon table"
-    init_pokemon_type_table="INIT: Create, migrate, seed and view pokemon species table"
     delete_db="WARNING: Delete pokemon database"
     exit="Exit"
 
-    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$get_species_with_type" "$create"  "$init_pokemon_species" "$init_pokemon_table" "$init_pokemon_type_table" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$get_species_with_type" "$create" "$delete_db" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -57,38 +54,24 @@ while true; do
 
             cat ../migrations/202308170000_create_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
             cat ../queries/check_database_exists.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
-            ;;
 
-        "$init_pokemon_species")
-            cd db-data/ || exit 1
-            # Create table
+            # Create pokemon_species table
             cat ../migrations/202308181628_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
-            # Seed table
             cat ../seeds/202308181628_populate_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
-            # Select all records
             cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-            ;;
-
-        "$init_pokemon_table")
-            cd db-data/ || exit 1
-            # Create table
+            
+            # Create pokemon table
             cat ../migrations/202308181628_create_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
-            # Seed table
             cat ../seeds/202308181628_populate_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
-            # Select all records
             cat ../queries/get_all_pokemon.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
-            ;;
         
-        "$init_pokemon_type_table")
-            cd db-data/ || exit 1
-            # Create and migrate table
+            # Create pokemon type table and migrate
             cat ../migrations/202309050000_create_pokemon_type_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
-            # Seed table
             cat ../seeds/202309050000_seed_pokemon_type.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
             ;;
 
