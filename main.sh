@@ -17,7 +17,7 @@ echo "You chose: $result"
 
 case $result in
     "$connect")
-        cd db-data/
+        cd db-data/ || exit 1
         # Equivalent to
         # terminal --> docker compose exec db bash
         # docker --> psql -U justin -d pokemon
@@ -26,7 +26,7 @@ case $result in
 
         
     "$init_pokemon_species")
-        cd db-data/
+        cd db-data/ || exit 1
         # Create table
         cat ../migrations/202308181628_create_pokemon_species_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
@@ -37,7 +37,7 @@ case $result in
         cat ../queries/get_all_species.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
         ;;
     "$init_pokemon_table")
-        cd db-data/
+        cd db-data/ || exit 1
         # Create table
         cat ../migrations/202308181628_create_pokemon_table.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
 
@@ -49,14 +49,14 @@ case $result in
         ;;
         
     "$create")
-        cd db-data/
+        cd db-data/ || exit 1
 
         cat ../migrations/202308170000_create_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
         cat ../queries/check_database_exists.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
         ;;
 
     "$delete_db")
-        cd db-data/
+        cd db-data/ || exit 1
 
         cat ../queries/drop_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
         ;;
