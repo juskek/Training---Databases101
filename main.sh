@@ -4,11 +4,11 @@ source ./menu.sh
 
 # example usage
 connect="Connect to database with psql"
-create="Create database"
 one="Create, seed and view pokemon_species table"
 two="Create, seed and view pokemon table"
+create="INIT: Create pokemon database"
 three="WARNING: Delete pokemon database"
-options=("$connect" "$create" "$one" "$two" "$three")
+options=("$connect"  "$one" "$two" "$create" "$three")
 
 select_option "${options[@]}"
 result="${options[$?]}"
@@ -24,12 +24,6 @@ case $result in
         docker-compose exec db bash -c "psql -U justin -d pokemon"
         ;;
 
-    "$create")
-        cd db-data/
-
-        cat ../migrations/202308170000_create_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
-        cat ../queries/check_database_exists.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
-        ;;
         
     "$one")
         cd db-data/
@@ -53,6 +47,14 @@ case $result in
         # Select all records
         cat ../queries/get_all_pokemon.sql | docker exec -i training---databases101-db-1 psql -U justin -d pokemon
         ;;
+        
+    "$create")
+        cd db-data/
+
+        cat ../migrations/202308170000_create_database.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
+        cat ../queries/check_database_exists.sql | docker exec -i training---databases101-db-1 psql -U justin -d postgres
+        ;;
+
     "$three")
         cd db-data/
 
