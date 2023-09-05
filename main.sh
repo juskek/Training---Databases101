@@ -3,11 +3,12 @@
 source ./menu.sh
 
 # example usage
+connect="Connect to database with psql"
 create="Create database"
 one="Create, seed and view pokemon_species table"
 two="Create, seed and view pokemon table"
 three="WARNING: Delete pokemon database"
-options=("$create" "$one" "$two" "$three")
+options=("$connect" "$create" "$one" "$two" "$three")
 
 select_option "${options[@]}"
 result="${options[$?]}"
@@ -15,6 +16,14 @@ result="${options[$?]}"
 echo "You chose: $result"
 
 case $result in
+    "$connect")
+        cd db-data/
+        # Equivalent to
+        # terminal --> docker compose exec db bash
+        # docker --> psql -U justin -d pokemon
+        docker-compose exec db bash -c "psql -U justin -d pokemon"
+        ;;
+
     "$create")
         cd db-data/
 
