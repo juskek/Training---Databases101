@@ -8,3 +8,6 @@ JOIN species_type ON pokemon_species.id = species_type.species_id
 JOIN pokemon_type ON species_type.type_id = pokemon_type.id
 -- Filter
 WHERE pokemon_type.name = 'Fire';
+
+
+-- Instead of a triple join, you can JOIN directly from pokemon.species_id to species_type.species_id
