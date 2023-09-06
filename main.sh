@@ -9,11 +9,12 @@ while true; do
     schema="Show schema"
     get_pokemon_with_species_name="Get all pokemon with a particular species name"
     get_species_with_type="Get species of type"
+    get_pokemon_with_type="Get pokemon with type"
     create="INIT: Create pokemon database"
     delete_db="WARNING: Delete pokemon database"
     exit="Exit"
 
-    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$get_species_with_type" "$create" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$get_pokemon_with_species_name" "$get_species_with_type" "$get_pokemon_with_type" "$create" "$delete_db" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -38,6 +39,11 @@ while true; do
             ;;
 
         "$get_species_with_type")
+            cd db-data/ || exit 1
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_type.sql
+            ;;
+        
+        "$get_pokemon_with_type")
             cd db-data/ || exit 1
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_species_where_type.sql
             ;;
