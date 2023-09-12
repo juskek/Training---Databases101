@@ -67,6 +67,9 @@ while true; do
             # Create type weakness
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120000_create_type_weakness.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309120000_seed_type_weakness.sql
+            # Create trainer
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120001_create_trainer.sql
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309120001_seed_trainer.sql
             ;;
 
         "$delete_db")
