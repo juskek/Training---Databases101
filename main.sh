@@ -50,16 +50,23 @@ while true; do
 
         "$create")
             cd db-data/ || exit 1
+            # Create db
             docker exec -i training---databases101-db-1 psql -U justin -d postgres < ../migrations/202308170000_create_database.sql
             docker exec -i training---databases101-db-1 psql -U justin -d postgres < ../queries/check_database_exists.sql
+            # Create pokemon species
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202308181628_create_pokemon_species_table.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202308181628_populate_pokemon_species_table.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_all_species.sql
+            # Create pokemon 
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202308181628_create_pokemon_table.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202308181628_populate_pokemon_table.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_all_pokemon.sql
+            # Create pokemon type
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309050000_create_pokemon_type_table.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309050000_seed_pokemon_type.sql
+            # Create type weakness
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120000_create_type_weakness.sql
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309120000_seed_type_weakness.sql
             ;;
 
         "$delete_db")
