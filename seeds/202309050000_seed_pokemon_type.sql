@@ -1,8 +1,24 @@
 -- Insert pokemon types
 INSERT INTO pokemon_type (name)
-VALUES ('Electric'),
+VALUES ('Normal'),
     ('Fire'),
-    ('Water') ON CONFLICT (name) DO NOTHING;
+    ('Water'),
+    ('Electric'),
+    ('Grass'),
+    ('Ice'),
+    ('Fighting'),
+    ('Poison'),
+    ('Ground'),
+    ('Flying'),
+    ('Psychic'),
+    ('Bug'),
+    ('Rock'),
+    ('Ghost'),
+    ('Dragon'),
+    ('Dark'),
+    ('Steel'),
+    ('Fairy') ON CONFLICT (name) DO NOTHING;
+
 -- Insert pokemon species
 INSERT INTO pokemon_species (name)
 VALUES ('Lanturn') ON CONFLICT (name) DO NOTHING;
