@@ -71,4 +71,4 @@ VALUES (
             FROM pokemon_type
             WHERE name = 'Water'
         )
-    );
+    ) ON CONFLICT DO NOTHING;
