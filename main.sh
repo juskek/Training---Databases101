@@ -10,11 +10,12 @@ while true; do
     get_pokemon_where_species="Get pokemon where species = foo"
     get_species_where_type="Get species where type = foo"
     get_pokemon_where_type="Get pokemon with type = foo"
+    migrate="Mock live data and migrate"
     create="INIT: Create pokemon database"
     delete_db="WARNING: Delete pokemon database"
     exit="Exit"
 
-    options=("$connect" "$schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$create" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -46,6 +47,14 @@ while true; do
         "$get_pokemon_where_type")
             cd db-data/ || exit 1
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_species_where_type.sql
+            ;;
+            
+        "$migrate")
+            cd db-data/ || exit 1
+            # Make pokemon nickname unique
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120003_make_pokemon_nickname_unique.sql
+            # Add live data
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../mock_production/202309120000_prod.sql
             ;;
 
         "$create")
