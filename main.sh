@@ -70,6 +70,9 @@ while true; do
             # Create trainer
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120001_create_trainer.sql
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309120001_seed_trainer.sql
+            # Create items
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120002_create_items.sql
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../seeds/202309120002_seed_items.sql
             ;;
 
         "$delete_db")
