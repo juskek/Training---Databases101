@@ -7,6 +7,7 @@ while true; do
 
     connect="Connect to database with psql"
     schema="Show schema"
+    dump_schema="Dump schema"
     get_pokemon_where_species="Get pokemon where species = foo"
     get_species_where_type="Get species where type = foo"
     get_pokemon_where_type="Get pokemon with type = foo"
@@ -15,7 +16,7 @@ while true; do
     delete_db="WARNING: Delete pokemon database"
     exit="Exit"
 
-    options=("$connect" "$schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -32,6 +33,14 @@ while true; do
         "$schema")
             cd db-data/ || exit 1
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/show_schema.sql
+            ;;
+        
+        "$dump_schema")
+            cd db-data/ || exit 1
+            mkdir -p ../dumps
+            docker exec -i training---databases101-db-1 bash -c "pg_dump -U justin -d pokemon --schema-only --file=/var/lib/postgresql/data/schema_dump.sql"
+            docker cp training---databases101-db-1:/var/lib/postgresql/data/schema_dump.sql ../dumps/schema_dump.sql
+            echo "Schema dumped to ../dumps/schema_dump.sql"
             ;;
 
         "$get_pokemon_where_species")
