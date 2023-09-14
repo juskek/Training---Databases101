@@ -1,0 +1,59 @@
+
+Table "items" {
+  "id" uuid [not null, default: `uuid_generate_v4()`]
+  "name" text [not null]
+}
+
+Table "pokemon" {
+  "id" uuid [not null, default: `uuid_generate_v4()`]
+  "species_id" uuid [not null]
+  "nickname" text [not null]
+  "trainer_id" uuid
+}
+
+Table "pokemon_species" {
+  "id" uuid [not null, default: `uuid_generate_v4()`]
+  "name" text [not null]
+}
+
+Table "pokemon_type" {
+  "id" uuid [not null, default: `uuid_generate_v4()`]
+  "name" text [not null]
+}
+
+Table "species_type" {
+  "species_id" uuid [not null]
+  "type_id" uuid [not null]
+}
+
+Table "trainer" {
+  "id" uuid [not null, default: `uuid_generate_v4()`]
+  "name" text [not null]
+}
+
+Table "trainer_items" {
+  "trainer_id" uuid [not null]
+  "item_id" uuid [not null]
+  "quantity" integer [not null, default: 1]
+}
+
+Table "type_weakness" {
+  "type_id" uuid [not null]
+  "weak_against_id" uuid [not null]
+}
+
+Ref "pokemon_species_id_fkey":"pokemon_species"."id" < "pokemon"."species_id"
+
+Ref "pokemon_trainer_id_fkey":"trainer"."id" < "pokemon"."trainer_id"
+
+Ref "species_type_species_id_fkey":"pokemon_species"."id" < "species_type"."species_id"
+
+Ref "species_type_type_id_fkey":"pokemon_type"."id" < "species_type"."type_id"
+
+Ref "trainer_items_item_id_fkey":"items"."id" < "trainer_items"."item_id"
+
+Ref "trainer_items_trainer_id_fkey":"trainer"."id" < "trainer_items"."trainer_id"
+
+Ref "type_weakness_type_id_fkey":"pokemon_type"."id" < "type_weakness"."type_id"
+
+Ref "type_weakness_weak_against_id_fkey":"pokemon_type"."id" < "type_weakness"."weak_against_id"
