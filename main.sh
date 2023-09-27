@@ -15,9 +15,10 @@ while true; do
     create="INIT: Create pokemon database"
     delete_db="WARNING: Delete pokemon database"
     backup_pgdumps="BACKUP: using pg dumps"
+    setup_archiving="Set up Continuous Archiving and PITR"
     exit="Exit"
 
-    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$backup_pgdumps" "$exit")
+    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$backup_pgdumps" "$setup_archiving" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -105,6 +106,14 @@ while true; do
             docker exec -i training---databases101-db-1 bash -c "pg_dump -U justin -d pokemon --file=/var/lib/postgresql/data/backup_dump.sql"
             docker cp training---databases101-db-1:/var/lib/postgresql/data/backup_dump.sql ../dumps/backup_dump.sql
             echo "Database backup dumped to ../dumps/backup_dump.sql"
+            ;;
+
+        "$setup_archiving")
+            cd db-data/ || exit 1
+            echo "Setting up Continuous Archiving..."
+            # Assuming you have a script that sets up archiving for your PostgreSQL instance
+            
+            docker exec -i training---databases101-db-1 bash -c "bash ../setup_continuous_archiving.sh"
             ;;
 
         "$exit")
