@@ -14,9 +14,10 @@ while true; do
     migrate="Mock live data and migrate"
     create="INIT: Create pokemon database"
     delete_db="WARNING: Delete pokemon database"
+    backup_pgdumps="BACKUP: using pg dumps"
     exit="Exit"
 
-    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$exit")
+    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$backup_pgdumps" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -96,6 +97,14 @@ while true; do
         "$delete_db")
             cd db-data/ || exit 1
             docker exec -i training---databases101-db-1 psql -U justin -d postgres < ../queries/drop_database.sql
+            ;;
+
+        "$backup_pgdumps")
+            cd db-data/ || exit 1
+            mkdir -p ../dumps
+            docker exec -i training---databases101-db-1 bash -c "pg_dump -U justin -d pokemon --file=/var/lib/postgresql/data/backup_dump.sql"
+            docker cp training---databases101-db-1:/var/lib/postgresql/data/backup_dump.sql ../dumps/backup_dump.sql
+            echo "Database backup dumped to ../dumps/backup_dump.sql"
             ;;
 
         "$exit")
