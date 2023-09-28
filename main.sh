@@ -82,11 +82,11 @@ while true; do
 
             # Measure the start time for querying on pokemon_id
             start_time=$(date +%s)
-            echo "Querying on pokemon_id..."
-            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_species.sql
+            echo "Querying on pokemon species..."
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_id.sql
             end_time=$(date +%s)
             duration=$((end_time - start_time))
-            echo "Querying on pokemon_id took $duration seconds."
+            echo "Querying on pokemon species took $duration seconds."
 
             # Measure the start time for querying by trainer
             start_time=$(date +%s)
