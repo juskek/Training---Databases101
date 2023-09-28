@@ -71,14 +71,30 @@ while true; do
 
         "$one_million")
             cd db-data/ || exit 1
+
+            # Measure the start time for inserting one million pokemon
+            start_time=$(date +%s)
             echo "Inserting one million pokemon..."
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/insert_one_million_pokemon.sql
+            end_time=$(date +%s)
+            duration=$((end_time - start_time))
+            echo "Inserting one million pokemon took $duration seconds."
+
+            # Measure the start time for querying on pokemon_id
+            start_time=$(date +%s)
             echo "Querying on pokemon_id..."
-            # Assuming you have a query script that queries based on pokemon_id
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_species.sql
+            end_time=$(date +%s)
+            duration=$((end_time - start_time))
+            echo "Querying on pokemon_id took $duration seconds."
+
+            # Measure the start time for querying by trainer
+            start_time=$(date +%s)
             echo "Querying by trainer..."
-            # Assuming you have a query script that queries based on trainer
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_trainer.sql
+            end_time=$(date +%s)
+            duration=$((end_time - start_time))
+            echo "Querying by trainer took $duration seconds."
             ;;
 
         "$create")

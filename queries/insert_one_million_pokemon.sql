@@ -3,7 +3,7 @@ DECLARE
     i INTEGER := 0;
     species_id UUID;
     trainer_id UUID;
-    target_count INTEGER := 10000;
+    target_count INTEGER := 1000000;
 
 BEGIN
     -- Randomly select a species_id from the pokemon_species table
