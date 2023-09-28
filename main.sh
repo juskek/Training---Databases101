@@ -12,13 +12,14 @@ while true; do
     get_species_where_type="Get species where type = foo"
     get_pokemon_where_type="Get pokemon with type = foo"
     migrate="Mock live data and migrate"
+    one_million="Insert one million pokemon, query on pokemon_id and query by trainer"
     create="INIT: Create pokemon database"
     delete_db="WARNING: Delete pokemon database"
     backup_pgdumps="BACKUP: using pg dumps"
     setup_archiving="Set up Continuous Archiving and PITR"
     exit="Exit"
 
-    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$create" "$delete_db" "$backup_pgdumps" "$setup_archiving" "$exit")
+    options=("$connect" "$schema" "$dump_schema" "$get_pokemon_where_species" "$get_species_where_type" "$get_pokemon_where_type" "$migrate" "$one_million" "$create" "$delete_db" "$backup_pgdumps" "$setup_archiving" "$exit")
 
     select_option "${options[@]}"
     result="${options[$?]}"
@@ -66,6 +67,18 @@ while true; do
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../migrations/202309120003_make_pokemon_nickname_unique.sql
             # Add live data
             docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../mock_production/202309120000_prod.sql
+            ;;
+
+        "$one_million")
+            cd db-data/ || exit 1
+            echo "Inserting one million pokemon..."
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/insert_one_million_pokemon.sql
+            echo "Querying on pokemon_id..."
+            # Assuming you have a query script that queries based on pokemon_id
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_species.sql
+            echo "Querying by trainer..."
+            # Assuming you have a query script that queries based on trainer
+            docker exec -i training---databases101-db-1 psql -U justin -d pokemon < ../queries/get_pokemon_where_trainer.sql
             ;;
 
         "$create")
